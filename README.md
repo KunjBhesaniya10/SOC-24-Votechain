@@ -1,6 +1,21 @@
 # Summer of Code 2024 - Votechain
 The project aims to implement __Blockchain technology__ to create e-voting system.
 
+Blockchain is decentralized digital ledger that maintain records such as transactions or other important informations such that they remain immutable and transparent to whole network. Blockchain is chain of Blocks which are linked to their previous Blocks by cryptography technique known as Hashing.
+The Block have 
+
+
+
+
+
+
+
+
+
+
+
+
+
 The repositpry has several files -
 ### 1. [Blockchain.py](https://github.com/KunjBhesaniya10/SOC-24-Votechain/blob/main/Blockchain.py) - 
 
