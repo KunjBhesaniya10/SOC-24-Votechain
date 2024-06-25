@@ -17,5 +17,5 @@ The repositpry has several files -
 ### 4. [util.py](https://github.com/KunjBhesaniya10/SOC-24-Votechain/blob/main/util.py) -
 - contain utility functions.
 
-### 5. [flow_chart](https://github.com/KunjBhesaniya10/SOC-24-Votechain/blob/main/flot_chart.pdf) -
+### 5. [flow_chart](https://github.com/KunjBhesaniya10/SOC-24-Votechain/blob/main/flow_chart.pdf) -
 - describes sequence of function calls.
