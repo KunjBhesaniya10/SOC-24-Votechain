@@ -1,7 +1,7 @@
 from Block import Block
 
 
-class Blockchain :
+class Blockchain  :
     ''' 
     it will be list of block linked with HASH value of previous block.
     
@@ -11,7 +11,6 @@ class Blockchain :
         self.verified_pending_votes=[]           #mempool
         self.difficulty = difficulty
         self.vote_per_block = 8
-        self.voted_record = []             # records of voter who has voted already.
     
     def create_genesis_block(self):
         #creating genesis block - the first block of the blockchain.
@@ -37,11 +36,9 @@ class Blockchain :
         # This function validates the whole blockchain by checking the hashes of blocks.
         pass
     
-    def cast_vote(self,voter_id,):
-        # it will create instance of Vote class. The vote then, will be encrypt,signed and then added to mempool after verification.
-        from election import Vote,Voter
-        pass
-
+    
+        
+    
     def print_latest_block(self) :
         # print the latest  block in JSON format.
         pass
