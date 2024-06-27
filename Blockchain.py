@@ -10,7 +10,7 @@ class Blockchain  :
         self.chain = [self.create_genesis_block()]
         self.verified_pending_votes=[]           #mempool
         self.difficulty = difficulty
-        self.vote_per_block = 1
+        self.vote_per_block = 2
     
     def create_genesis_block(self):
         #creating genesis block - the first block of the blockchain.
@@ -47,10 +47,7 @@ class Blockchain  :
             Block.nonce +=1
             new_block_hash = Block.compute_hash()
             print('\n','mining started : nonce -', Block.nonce,end='\r')
-         
-
         
-
     def validate_chain(self):
         # This function validates the whole blockchain by checking the hashes of blocks.
         block_index = 1
@@ -65,17 +62,25 @@ class Blockchain  :
             block_index+=1
             prev_block_index+=1
         print('\n',' ******************** Blockchain is valid **********************','\n')
-        
-    
-    
-        
+             
     
     def print_latest_block(self) :
         # print the latest  block in JSON format.
-        self.get_latest_block().print()
+        data=self.get_latest_block().print()
+        print(json.dumps(data,indent=4))
         
+
     def print_chain(self) :
-        for block in self.chain :
-            block.print()
+        data = [{
+            "index" : f'{0} Genesis Block',
+            "previous_hash" : '0'*64,
+            "nonce": 1,
+            "votes" : '-------------',
+            "timestamp" : self.chain[0].timestamp
+        }]
+        for block in self.chain[1:] :
+           data.append(block.print())
+        data = json.dumps(data,indent=4)
+        print(data)
 
 

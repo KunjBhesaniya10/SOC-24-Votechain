@@ -1,6 +1,7 @@
 from datetime import datetime
 from Crypto.Hash import SHA256
 import json
+
 class Block :
     '''Block will have Votes, nonce, previous HASH value,index and timestamp. '''
 
@@ -19,7 +20,12 @@ class Block :
         return hash_of_block
 
     def print(self) :
-        if self.votes != None :
-            block = self
-            data = json.dumps(self.__dict__,indent=4)
-        print(data)
+            data = {
+                "index": self.index,
+                "previous_hash" : self.prev_hash,
+                "nonce" : self.nonce,
+                "Votes" : [vote.print() for vote in self.votes],
+                "timestamp" : self.timestamp
+            }
+            return data
+    

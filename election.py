@@ -11,7 +11,8 @@ import base64
 class Vote :
     ''' handles creation, encryption, verification and storing votes.'''
     def __init__(self,name,voted_for,private_key,authority_pub_key) -> None:
-        self.voter_id = hash_of(name+private_key.decode())
+        print(type(private_key))
+        self.voter_id = hash_of(name + private_key)
         self.timestamp = f'{datetime.now()}'
         self.encrypted_vote = self.encrypt_vote(voted_for,authority_pub_key)
         self.signature = self.sign(private_key)
@@ -44,9 +45,8 @@ class Vote :
                 "timestamp" : self.timestamp,
                 "encrypted_vote" : self.encrypted_vote,
                 "signature" : base64.b64encode(self.signature).decode('utf-8')
-            }
-        data = json.dumps(obj_to_dict,indent=4)
-        return data
+        }
+        return obj_to_dict
 
 
 
@@ -126,16 +126,9 @@ class Election :
     def declare_result ( self ) :
         # declare results of election.
         pass
-    
-election = Election()
-pvt_key,pub_key = election.register_to_vote('kunj')
-# election.cast_vote('kunj',pvt_key,'kunj')
-vote = Vote('kunj','kunj',pvt_key,election.authority_public_Key)
-# pvt_key,pub_key = election.register_to_vote('user1')
-# election.cast_vote('user1',pvt_key,'kunj')
-vote.print()
-# election.Blockchain.create_block()
-# election.Blockchain.create_block()
-# election.Blockchain.print_chain()
 
-# election.Blockchain.validate_chain()
+# election=Election()
+# pvt_key,pub_key=election.register_to_vote('kunj')
+# election.cast_vote('kunj',pvt_key,'kunj')
+# print(type(pvt_key.decode()))
+# print(pvt_key)

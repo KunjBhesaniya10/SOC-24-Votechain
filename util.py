@@ -22,4 +22,20 @@ def export_keys(pvt_key,pub_key):
     pub_key = pub_key.export_key()
     return pvt_key,pub_key
 
+def prompts () :
+    print('------------------------------------------')
+    print('All prompts are listed below - ')
+    print('"prompts"','- to get list of prompts.')
+    print('"register"','- to register for voting.')
+    print( '"contest"','- to contest in election.')
+    print('"vote"','- to vote in election.')
+    print('"print chain"','- to print the whole chain.')
+    print('"print latest block"', '- to print the latest block.')
+    print('------------------------------------------')
 
+
+str = 'kunj'
+str = str.encode()
+print(str)
+s =input()
+print(type(s.encode()))
