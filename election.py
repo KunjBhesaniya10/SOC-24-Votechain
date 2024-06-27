@@ -46,7 +46,7 @@ class Vote :
                 "signature" : base64.b64encode(self.signature).decode('utf-8')
             }
         data = json.dumps(obj_to_dict,indent=4)
-        print(data)
+        return data
 
 
 
@@ -94,11 +94,15 @@ class Election :
     
     def verify_vote(self,vote):
         ''' verification of vote. to prevent multiple voting by same Id, verify digital signature.'''
-        if vote.voter_id not in  self.Blockchain.voted_record :
+        all_voted_ids=[]
+        if len(self.Blockchain.chain) > 1:
+            for block in self.Blockchain.chain :
+                for vote in block.votes :
+                 all_voted_ids.append(vote.voter_id)
+        if vote.voter_id not in all_voted_ids :
             # verifying signature  
             pub_key = None
             for a,b in self.voter_verification_details :
-                    print(a,vote.voter_id)
                     if a == vote.voter_id :
                         pub_key = b
             if pub_key is None :
@@ -125,4 +129,13 @@ class Election :
     
 election = Election()
 pvt_key,pub_key = election.register_to_vote('kunj')
-election.cast_vote('kunj',pvt_key,'kunj')
+# election.cast_vote('kunj',pvt_key,'kunj')
+vote = Vote('kunj','kunj',pvt_key,election.authority_public_Key)
+# pvt_key,pub_key = election.register_to_vote('user1')
+# election.cast_vote('user1',pvt_key,'kunj')
+vote.print()
+# election.Blockchain.create_block()
+# election.Blockchain.create_block()
+# election.Blockchain.print_chain()
+
+# election.Blockchain.validate_chain()
