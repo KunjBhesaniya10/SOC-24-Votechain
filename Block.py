@@ -1,6 +1,5 @@
 from datetime import datetime
 from Crypto.Hash import SHA256
-import json
 
 class Block :
     '''Block will have Votes, nonce, previous HASH value,index and timestamp. '''

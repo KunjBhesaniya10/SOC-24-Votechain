@@ -1,12 +1,12 @@
 ''' all utility functions defined here.'''
 import hashlib
 from Crypto.PublicKey import RSA
+import base64
 
 def hash_of(message) :
     # use sha-256 for hashing given message.
     
     hashed_message = hashlib.sha256(message.encode()).hexdigest()
-
     return hashed_message
 
 
@@ -19,7 +19,8 @@ def create_key_pairs():
 def export_keys(pvt_key,pub_key):
     # serialize the keys into ASCII characters
     pvt_key = pvt_key.export_key()
-    pub_key = pub_key.export_key()
+    pvt_key = base64.b64encode(pvt_key).decode('utf-8')
+    pub_key = base64.b64encode(pub_key.export_key()).decode('utf-8')
     return pvt_key,pub_key
 
 def prompts () :
@@ -34,8 +35,3 @@ def prompts () :
     print('------------------------------------------')
 
 
-str = 'kunj'
-str = str.encode()
-print(str)
-s =input()
-print(type(s.encode()))

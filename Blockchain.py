@@ -66,9 +66,19 @@ class Blockchain  :
     
     def print_latest_block(self) :
         # print the latest  block in JSON format.
-        data=self.get_latest_block().print()
-        print(json.dumps(data,indent=4))
-        
+        if len(self.chain) >1 :
+            data=self.get_latest_block().print()
+            print(json.dumps(data,indent=4))
+        else :
+            data = [{
+            "index" : f'{0} Genesis Block',
+            "previous_hash" : '0'*64,
+            "nonce": 1,
+            "votes" : '-------------',
+            "timestamp" : self.chain[0].timestamp
+        }]
+            print(data)
+            
 
     def print_chain(self) :
         data = [{
