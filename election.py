@@ -27,8 +27,11 @@ class Vote :
     
     def decrypt_vote(self,authority_private_key):
         # decrypt vote in counting phase by authority.
+        encrypted_vote = base64.b64decode(self.encrypted_vote)
+        decrypted_vote = PKCS1_OAEP.new(authority_private_key).decrypt(encrypted_vote).decode()
+
+        return decrypted_vote
         
-        pass
 
     def sign(self,private_key):
         # digital signature by registered voter.
@@ -56,7 +59,7 @@ class Vote :
 class Voter :
     ''' eligible voters'''
     def __init__(self,voter_name) -> None:
-        self.voter_name = voter_name
+        self.voter_name = voter_name.lower()
         self.private_key,self.public_key = create_key_pairs()
         self.private_key,self.public_key = export_keys(self.private_key,self.public_key)
         self.hashed_id = hash_of(self.voter_name + self.private_key)
@@ -70,13 +73,14 @@ class Election :
         self.voters_name = []
         self.voter_verification_details = []        # list of tuple having hash of voter_id+private_key of eligible voters and corresponding public_key.
         self.authority_private_Key, self.authority_public_Key = create_key_pairs() 
-        self.contestants = ['kunj','xyz']
+        self.contestants = ['contestant1','contestant2','contestant3','contestant4']
 
     def register_to_vote(self,voter_name):
         # registration of voter and updating voter_details.
-            voter = Voter(voter_name)
-            self.voters_name.append(voter_name)
+            voter = Voter(voter_name.lower())
+            self.voters_name.append(voter_name.lower())
             self.voter_verification_details.append((voter.hashed_id,voter.public_key))
+            print(voter.hashed_id)
             return voter.private_key,voter.public_key
         
 
@@ -98,12 +102,13 @@ class Election :
     
     def verify_vote(self,vote):
         ''' verification of vote. to prevent multiple voting by same Id, verify digital signature.'''
-        all_voted_ids=[ vote.voter_id for vote in  self.Blockchain.verified_pending_votes]
+        all_voted_ids=[ vote1.voter_id for vote1 in  self.Blockchain.verified_pending_votes]
         if len(self.Blockchain.chain) > 1:
-            for block in self.Blockchain.chain :
-                for vote in block.votes :
-                 all_voted_ids.append(vote.voter_id)
-                 print(all_voted_ids)
+            for block in self.Blockchain.chain[1:] :
+                for vote1 in block.votes :
+                 all_voted_ids.append(vote1.voter_id)
+        print(all_voted_ids)
+        print(vote.voter_id)
         if vote.voter_id not in all_voted_ids :
             # verifying signature  
             pub_key = None
@@ -111,29 +116,37 @@ class Election :
                     if a == vote.voter_id :
                         pub_key = b
             if pub_key is None :
-                print( "Invalid Voter name or Private key")
+                print( "\n xxxxx Invalid Voter name or Private key xxxxx")
             else  :
                 hash_object = SHA256.new((vote.voter_id + vote.encrypted_vote + vote.timestamp).encode())
                 try :
                     pkcs1_15.new(RSA.import_key(base64.b64decode(pub_key))).verify(hash_object,vote.signature)
                     return 1
                 except(ValueError) :
-                    print("Signature is invalid. Vote is discarded.",'\n')
+                    print("\n xxxxx Signature is invalid. Vote is discarded xxxxx",'\n')
                     return 0
         else :
-            print("Already Voted with this voter id.",'\n')
+            print("\n xxxxx Already Voted with this voter id. xxxxx",'\n')
             return 0
 
     def counting_votes ( self ):
         # counts votes by decrypting all votes by traversing chain.
-        pass
+        all_votes = []
+        for block in self.Blockchain.chain[1:]:
+            for vote in block.votes :
+                all_votes.append(vote)
+        res = {name:0 for name in self.contestants}
+        for vote in all_votes:
+            decrypted_vote = vote.decrypt_vote(self.authority_private_Key)
+            res[decrypted_vote]+=1    
+        return res 
 
-    def declare_result ( self ) :
+    def declare_result ( self,res ) :
         # declare results of election.
-        pass
-
-# election=Election()
-# pvt_key,pub_key=election.register_to_vote('kunj')
-# election.cast_vote('kunj',pvt_key,'kunj')
-# print(type(pvt_key.decode()))
-# print(pvt_key)
+        res = [(name,count) for name,count in res.items()]
+        res= sorted(res,key= lambda x : x[1],reverse=True)
+        print(f'\nWinner of election - {', '.join([name[0] for name in res if name[1]==res[0][1]])} with {res[0][1]} votes.\n')
+        print('here is the complete statistics of the election -\n')
+        print("name","votes",sep='\t\t')
+        for contestant in res :
+            print(contestant[0],contestant[1],sep='\t\t')

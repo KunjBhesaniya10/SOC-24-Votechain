@@ -28,10 +28,11 @@ def prompts () :
     print('All prompts are listed below - ')
     print('"prompts"','- to get list of prompts.')
     print('"register"','- to register for voting.')
-    print( '"contest"','- to contest in election.')
     print('"vote"','- to vote in election.')
     print('"print chain"','- to print the whole chain.')
     print('"print latest block"', '- to print the latest block.')
+    print('"exit" - to exit the election.')
+    print('"validate" - to validate the chain.')
     print('------------------------------------------')
 
 
