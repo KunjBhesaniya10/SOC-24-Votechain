@@ -12,7 +12,7 @@ while(True) :
    
     if (  i == 'register' ) :
         name = input('enter your name - ')
-        if name not in election.voters_name:
+        if name.lower() not in election.voters_name:
             pvt_key,pub_key = election.register_to_vote(name)
             print('\n',f' your private key is -','\n', pvt_key,'\n','store it somewhere privately and use it to vote. Do not share with anyone.','\n')
             print('your public key is given below - ', '\n',pub_key,'\n' )
@@ -25,8 +25,11 @@ while(True) :
             print(election.contestants.index(i),i)
         print('\n')
         name = input('enter your name - ')
+        if name.lower() not in election.voters_name :
+            print('name not in registered voter list.\n')
         Voted_for = input('enter name of contestant you want to vote - ')
-        if Voted_for not in election.contestants :
+
+        if Voted_for.lower() not in election.contestants :
             print('entered wrong contestant name. Please enter valid name from the list given above.\n')
         else :
             private_key = input(' enter your private_key - ')
@@ -44,7 +47,7 @@ while(True) :
         election.Blockchain.print_latest_block()
 
     elif ( i == 'validate' ):
-        election.Blockchain.validate_chain()
+        election.Blockchain.validate_chain(True)
 
     elif ( i == 'prompts' ):
         prompts()

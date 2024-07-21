@@ -83,7 +83,6 @@ class Election :
             print(voter.hashed_id)
             return voter.private_key,voter.public_key
         
-
     def register_contestant(self, contestant_name):
         # register to contest election.
         if contestant_name not in self.contestants :
@@ -107,8 +106,6 @@ class Election :
             for block in self.Blockchain.chain[1:] :
                 for vote1 in block.votes :
                  all_voted_ids.append(vote1.voter_id)
-        print(all_voted_ids)
-        print(vote.voter_id)
         if vote.voter_id not in all_voted_ids :
             # verifying signature  
             pub_key = None
@@ -145,7 +142,11 @@ class Election :
         # declare results of election.
         res = [(name,count) for name,count in res.items()]
         res= sorted(res,key= lambda x : x[1],reverse=True)
-        print(f'\nWinner of election - {', '.join([name[0] for name in res if name[1]==res[0][1]])} with {res[0][1]} votes.\n')
+        if res[1][1] < res[0][1]:
+            print(f'\nWinner of election - {res[0][0]} wins with {res[0][1]} votes.\n')
+        else :
+            print(f'\n Election tied  - {', '.join([name[0] for name in res if name[1]==res[0][1]])} with {res[0][1]} votes.\n')
+
         print('here is the complete statistics of the election -\n')
         print("name","votes",sep='\t\t')
         for contestant in res :

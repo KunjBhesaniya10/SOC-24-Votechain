@@ -48,7 +48,7 @@ class Blockchain  :
             new_block_hash = Block.compute_hash()
             print('\n','mining started : nonce -', Block.nonce,end='\r')
         
-    def validate_chain(self):
+    def validate_chain(self,print_default=False):
         # This function validates the whole blockchain by checking the hashes of blocks.
         block_index = 1
         prev_block_index = 0
@@ -61,7 +61,8 @@ class Blockchain  :
                 return
             block_index+=1
             prev_block_index+=1
-        print('\n',' ******************** Blockchain is valid **********************','\n')
+        if print_default :
+            print('\n',' ******************** Blockchain is valid **********************','\n')
              
     
     def print_latest_block(self) :
