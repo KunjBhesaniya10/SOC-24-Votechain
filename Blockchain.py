@@ -50,6 +50,8 @@ class Blockchain  :
         
     def validate_chain(self,print_default=False):
         # This function validates the whole blockchain by checking the hashes of blocks.
+        # 'default' parameter is used to control when to show print statement on terminal and when to not.
+
         block_index = 1
         prev_block_index = 0
         while block_index < len(self.chain) :
@@ -64,7 +66,6 @@ class Blockchain  :
         if print_default :
             print('\n',' ******************** Blockchain is valid **********************','\n')
              
-    
     def print_latest_block(self) :
         # print the latest  block in JSON format.
         if len(self.chain) >1 :
