@@ -27,6 +27,7 @@ while(True) :
         name = input('enter your name - ')
         if name.lower() not in election.voters_name :
             print('name not in registered voter list.\n')
+            continue
         Voted_for = input('enter name of contestant you want to vote - ')
 
         if Voted_for.lower() not in election.contestants :

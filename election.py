@@ -5,7 +5,6 @@ from Crypto.Signature import pkcs1_15
 from Crypto.PublicKey import RSA
 from Crypto.Hash import SHA256
 from Crypto.Cipher import PKCS1_OAEP
-import json
 import base64
 
 class Vote :
@@ -80,7 +79,6 @@ class Election :
             voter = Voter(voter_name.lower())
             self.voters_name.append(voter_name.lower())
             self.voter_verification_details.append((voter.hashed_id,voter.public_key))
-            print(voter.hashed_id)
             return voter.private_key,voter.public_key
         
     def register_contestant(self, contestant_name):

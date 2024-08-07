@@ -7,9 +7,10 @@ class Blockchain  :
     
     '''
     def __init__(self,difficulty=3) -> None:
+        self.difficulty = difficulty
         self.chain = [self.create_genesis_block()]
         self.verified_pending_votes=[]           #mempool
-        self.difficulty = difficulty
+
         self.vote_per_block = 2
     
     def create_genesis_block(self):
@@ -19,6 +20,10 @@ class Blockchain  :
         nonce =1
         Votes= None
         genesis_block = Block(index,prev_hash,Votes,nonce)
+        hash_of_block = genesis_block.compute_hash()
+        while(hash_of_block[:self.difficulty]!='0'*self.difficulty):
+            genesis_block.nonce+=1
+            hash_of_block = genesis_block.compute_hash()
         return genesis_block
 
     def add_block(self,Block):
@@ -43,10 +48,9 @@ class Blockchain  :
     def proof_of_work(self,Block):
         # generate proof of work for the block and updates the nonce value.
         new_block_hash = Block.compute_hash()
-        while new_block_hash[:self.difficulty] == '0'*self.difficulty :
+        while new_block_hash[:self.difficulty] != '0'*self.difficulty :
             Block.nonce +=1
             new_block_hash = Block.compute_hash()
-            print('\n','mining started : nonce -', Block.nonce,end='\r')
         
     def validate_chain(self,print_default=False):
         # This function validates the whole blockchain by checking the hashes of blocks.
