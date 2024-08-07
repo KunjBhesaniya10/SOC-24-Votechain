@@ -1,5 +1,5 @@
 # Summer of Code 2024 - Votechain
-The project aims to implement **<u>Blockchain technology</u>** to create __E-Voting System__.
+The project aims to implement __E-Voting System__ with help of **<u>Blockchain technology</u>**.
 
 Blockchain is decentralized digital ledger that maintain records such as transactions or other important informations such that they remain immutable and transparent to whole network. Blockchain is chain of Blocks which are linked to their previous Blocks by cryptography technique known as Hashing.
 
