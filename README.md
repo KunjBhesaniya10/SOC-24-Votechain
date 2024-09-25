@@ -35,3 +35,10 @@ The repository has several files -
 
 ### 5. [flow_chart](https://github.com/KunjBhesaniya10/SOC-24-Votechain/blob/main/flow_chart.pdf) -
 - describes sequence of function calls.
+## Prerequisites
+
+Before running the project, ensure you have the Crypto library installed. You can install it using pip with the following command:
+
+```bash
+pip install pycryptodome
+
